@@ -1,0 +1,22 @@
+.input-amount{
+  text-align: center;
+}
+.grid-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  align-content: center;
+  grid-gap: 10px;
+  padding: 20px;
+}
+.input-amount-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.bttn{
+  outline: none;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  color: white;
+}

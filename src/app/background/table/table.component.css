@@ -1,0 +1,7 @@
+.square {
+  width: 64px;
+  height: 64px;
+  background-color: black;
+  margin: 4px;
+  border-radius: 5px;
+}
