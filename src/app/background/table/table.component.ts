@@ -39,10 +39,8 @@ export class TableComponent {
     });
   }
 
-  onClick(x: number, y: number) {
-    if (this.squares[x][y] === true) {
-      console.log('moxvda');
-    }
+  onClick(event: Event) {
+    console.log(event);
   }
 
 }
