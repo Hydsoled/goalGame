@@ -1,51 +1,11 @@
 <div style="
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 ">
-  <div>
-    <div class="row">
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
-      <div class="square">
-
-      </div>
+  <div class="flex-container" *ngFor="let z of x">
+    <div class="square" (click)="onClick(z,k)" *ngFor="let k of y">
     </div>
   </div>
 </div>

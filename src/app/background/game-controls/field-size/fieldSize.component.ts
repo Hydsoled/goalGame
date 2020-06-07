@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {FieldSizeService} from '../../shared/fieldSize.service';
 
 @Component({
   selector: 'app-field-size',
@@ -6,5 +7,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./fieldSize.component.css']
 })
 export class FieldSizeComponent {
+  constructor(private fieldSizeService: FieldSizeService) {
+  }
 
+  dimension(x: number, y: number) {
+    this.fieldSizeService.fieldUpdated.emit({x, y});
+  }
 }
