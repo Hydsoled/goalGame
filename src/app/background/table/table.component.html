@@ -7,8 +7,8 @@
   <div class="flex-container" *ngFor="let z of x">
     <div
       class="square"
-      [ngClass]="(squares[z][k]) ? 'bomb': 'nonBomb'"
-      (click)="onClick($event)"
+      #sqr
+      (click)="onClick(z,k)"
       *ngFor="let k of y">
     </div>
   </div>

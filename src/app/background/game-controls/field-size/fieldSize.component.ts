@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {FieldSizeService} from '../../shared/fieldSize.service';
+import {BetService} from '../../shared/bet.service';
 
 @Component({
   selector: 'app-field-size',
@@ -7,10 +8,18 @@ import {FieldSizeService} from '../../shared/fieldSize.service';
   styleUrls: ['./fieldSize.component.css']
 })
 export class FieldSizeComponent {
-  constructor(private fieldSizeService: FieldSizeService) {
+  isBet = false;
+
+  constructor(private fieldSizeService: FieldSizeService,
+              private betService: BetService) {
+    this.betService.isBet.subscribe(isBet => {
+      this.isBet = isBet;
+    });
   }
 
   dimension(x: number, y: number) {
-    this.fieldSizeService.fieldUpdated.emit({x, y});
+    if (!this.isBet) {
+      this.fieldSizeService.fieldUpdated.emit({x, y});
+    }
   }
 }

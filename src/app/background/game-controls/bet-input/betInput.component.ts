@@ -7,7 +7,11 @@ import {BetService} from '../../shared/bet.service';
   styleUrls: ['./betInput.component.css']
 })
 export class BetInputComponent {
+  isBet = false;
   constructor(private betService: BetService) {
+    this.betService.isBet.subscribe(val => {
+      this.isBet = val;
+    });
   }
   bet(amount: number){
     this.betService.betUpdated.emit(amount);

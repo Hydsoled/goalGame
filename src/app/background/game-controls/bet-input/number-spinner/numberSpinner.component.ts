@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Injectable} from '@angular/core';
 import {BetService} from '../../../shared/bet.service';
 
 @Component({
@@ -8,16 +8,25 @@ import {BetService} from '../../../shared/bet.service';
 })
 export class NumberSpinnerComponent {
   val: number;
+  isBet = false;
   constructor(private betService: BetService) {
     this.val = 0.1;
     this.betService.betUpdated.subscribe(amount => {
       this.val += amount;
     });
+    this.betService.isBet.subscribe(isBet => {
+      if (isBet) {
+        this.isBet = isBet;
+        this.betService.moneyUpdated.emit(-this.val);
+      }
+    });
   }
-  decrease(){
+
+  decrease() {
     this.val -= 0.1;
   }
-  increase(){
+
+  increase() {
     this.val += 0.1;
   }
 }

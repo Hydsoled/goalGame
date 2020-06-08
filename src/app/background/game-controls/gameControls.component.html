@@ -8,6 +8,9 @@
 >
   <div>
     <div class="control-row bg">
+      Money: {{playerMoney.toFixed(2)}}
+    </div>
+    <div class="control-row bg">
       <app-bet-input></app-bet-input>
     </div>
     <div class="control-row bg">
@@ -15,7 +18,7 @@
     </div>
     <div class="control-row bg">
       <div>
-        <button>BET</button>
+        <button (click)="isBet()">BET</button>
       </div>
     </div>
   </div>

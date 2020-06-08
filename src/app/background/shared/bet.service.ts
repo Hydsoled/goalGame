@@ -4,5 +4,11 @@ import {EventEmitter, Injectable} from '@angular/core';
   providedIn: 'root',
 })
 export class BetService {
+  playerMoney = 5000;
   betUpdated = new EventEmitter<number>();
+  isBet = new EventEmitter<boolean>();
+  moneyUpdated = new EventEmitter<number>();
+
+  constructor() {
+  }
 }

@@ -5,6 +5,7 @@
   border-radius: 5px;
   background-size: 64px 64px;
   cursor: pointer;
+  background-color: white;
 }
 .flex-container{
   display: flex;

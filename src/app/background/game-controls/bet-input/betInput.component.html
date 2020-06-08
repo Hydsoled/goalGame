@@ -6,9 +6,9 @@
     <app-number-spinner></app-number-spinner>
   </div>
   <div class="grid-container">
-    <button class="bttn" (click)="bet(1)">1$</button>
-    <button class="bttn" (click)="bet(2)">2$</button>
-    <button class="bttn" (click)="bet(5)">5$</button>
-    <button class="bttn" (click)="bet(10)">10$</button>
+    <button [disabled]="isBet" class="bttn" (click)="bet(1)">1$</button>
+    <button [disabled]="isBet" class="bttn" (click)="bet(2)">2$</button>
+    <button [disabled]="isBet" class="bttn" (click)="bet(5)">5$</button>
+    <button [disabled]="isBet" class="bttn" (click)="bet(10)">10$</button>
   </div>
 </div>
