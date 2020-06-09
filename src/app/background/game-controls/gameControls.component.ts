@@ -24,6 +24,7 @@ export class GameControlsComponent {
     if (!this.bet) {
       this.betService.isBet.emit(true);
     } else {
+      this.betService.moneyUpdated.emit(5000);
       this.betService.isBet.emit(false);
     }
   }
