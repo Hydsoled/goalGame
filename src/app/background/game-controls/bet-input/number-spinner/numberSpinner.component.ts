@@ -9,14 +9,15 @@ import {BetService} from '../../../shared/bet.service';
 export class NumberSpinnerComponent {
   val: number;
   isBet = false;
+
   constructor(private betService: BetService) {
     this.val = 0.1;
     this.betService.betUpdated.subscribe(amount => {
       this.val += amount;
     });
     this.betService.isBet.subscribe(isBet => {
-      if (isBet) {
-        this.isBet = isBet;
+      this.isBet = isBet;
+      if (isBet){
         this.betService.moneyUpdated.emit(-this.val);
       }
     });

@@ -7,12 +7,13 @@ import {BetService} from '../shared/bet.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements AfterContentChecked {
+export class TableComponent {
   @ViewChildren('sqr') myDiv: QueryList<HTMLDivElement>;
   squares: boolean[][];
   x = [];
   y = [];
   isBet = false;
+  money = 0;
   startIndex = 0;
 
   constructor(private fieldSizeService: FieldSizeService, private betService: BetService) {
@@ -20,6 +21,9 @@ export class TableComponent implements AfterContentChecked {
     let defX = 4;
     let defY = 7;
     this.fillTable(4, 7);
+    this.betService.moneyUpdated.subscribe(val => {
+      this.money = val;
+    });
     this.fieldSizeService.fieldUpdated.subscribe(fieldSize => {
       this.squares = [];
       this.fillTable(fieldSize.x, fieldSize.y);
@@ -31,14 +35,10 @@ export class TableComponent implements AfterContentChecked {
 
     this.betService.isBet.subscribe(isBet => {
       this.isBet = isBet;
+      if (!isBet) {
+        this.restartTable();
+      }
     });
-  }
-
-  ngAfterContentChecked(): void {
-    if (this.myDiv) {
-      // @ts-ignore
-      // console.log(this.myDiv._results);
-    }
   }
 
   onClick(x: number, y: number) {
@@ -46,11 +46,15 @@ export class TableComponent implements AfterContentChecked {
       return;
     }
     this.startIndex++;
+    let bomb = false;
     const index = this.y.length * x + y;
     let indx = 0;
     const xLength = this.x.length;
     while (indx < xLength) {
       if (this.squares[indx][y]) {
+        if (indx === x) {
+          bomb = true;
+        }
         // @ts-ignore
         this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('bomb');
       } else {
@@ -58,7 +62,27 @@ export class TableComponent implements AfterContentChecked {
         this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('nonBomb');
       }
       indx++;
+      if (bomb || this.y.length === y + 1) {
+        if (!bomb) {
+          this.betService.moneyUpdated.emit(5000 + this.money);
+        }
+        this.betService.isBet.emit(false);
+        bomb = false;
+      }
     }
+  }
+
+  restartTable() {
+    this.startIndex = 0;
+    const x1 = this.x.length;
+    const y1 = this.y.length;
+    this.x = [];
+    this.y = [];
+    setTimeout(() => {
+      this.fieldSizeService.fieldUpdated.emit({
+        x: x1, y: y1
+      });
+    }, 10);
   }
 
   fillBombs(defX, defY) {

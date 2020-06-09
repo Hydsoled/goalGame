@@ -8,13 +8,23 @@ import {BetService} from '../shared/bet.service';
 })
 export class GameControlsComponent {
   playerMoney = 0;
+  bet = false;
+
   constructor(private betService: BetService) {
     this.playerMoney = this.betService.playerMoney;
     this.betService.moneyUpdated.subscribe(val => {
       this.playerMoney += val;
     });
+    this.betService.isBet.subscribe(val => {
+      this.bet = val;
+    });
   }
-  isBet(){
-    this.betService.isBet.emit(true);
+
+  isBet() {
+    if (!this.bet) {
+      this.betService.isBet.emit(true);
+    } else {
+      this.betService.isBet.emit(false);
+    }
   }
 }
