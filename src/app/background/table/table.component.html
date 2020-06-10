@@ -6,7 +6,7 @@
 ">
   <div class="flex-container" *ngFor="let z of x">
     <div
-      class="square"
+      [ngClass]="(x.length > 4)? 'smallSquare square': 'square'"
       #sqr
       (click)="onClick(z,k)"
       *ngFor="let k of y">

@@ -9,6 +9,8 @@ import {BetService} from '../shared/bet.service';
 export class GameControlsComponent {
   playerMoney = 0;
   bet = false;
+  winMoney = 0;
+  textBet = 'BET';
 
   constructor(private betService: BetService) {
     this.playerMoney = this.betService.playerMoney;
@@ -17,14 +19,24 @@ export class GameControlsComponent {
     });
     this.betService.isBet.subscribe(val => {
       this.bet = val;
+      if (val) {
+        this.winMoney = 0;
+      }else{
+        this.textBet = 'BET';
+      }
+    });
+    this.betService.clickNumber.subscribe(val => {
+      this.winMoney = val;
+      this.textBet = this.winMoney.toFixed(2).toString();
     });
   }
 
   isBet() {
     if (!this.bet) {
       this.betService.isBet.emit(true);
-    } else {
-      this.betService.moneyUpdated.emit(5000);
+    } else if (this.winMoney !== 0) {
+      this.textBet = 'BET';
+      this.playerMoney += this.winMoney;
       this.betService.isBet.emit(false);
     }
   }

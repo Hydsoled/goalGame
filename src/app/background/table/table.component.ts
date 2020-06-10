@@ -14,6 +14,7 @@ export class TableComponent {
   y = [];
   isBet = false;
   money = 0;
+  point = 1;
   startIndex = 0;
 
   constructor(private fieldSizeService: FieldSizeService, private betService: BetService) {
@@ -37,6 +38,17 @@ export class TableComponent {
       this.isBet = isBet;
       if (!isBet) {
         this.restartTable();
+      } else {
+        let indxX = 0;
+        const xLength = this.x.length;
+        while (indxX < xLength) {
+          // @ts-ignore
+          if (this.myDiv._results[this.y.length * indxX]) {
+            // @ts-ignore
+            this.myDiv._results[this.y.length * indxX].nativeElement.classList.add('currentSquare');
+          }
+          indxX++;
+        }
       }
     });
   }
@@ -46,34 +58,17 @@ export class TableComponent {
       return;
     }
     this.startIndex++;
-    let bomb = false;
-    const index = this.y.length * x + y;
-    let indx = 0;
+    const bomb = false;
+    this.point += 0.5;
+    this.betService.clickNumber.emit(this.point * -this.money);
+    const indx = 0;
     const xLength = this.x.length;
-    while (indx < xLength) {
-      if (this.squares[indx][y]) {
-        if (indx === x) {
-          bomb = true;
-        }
-        // @ts-ignore
-        this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('bomb');
-      } else {
-        // @ts-ignore
-        this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('nonBomb');
-      }
-      indx++;
-      if (bomb || this.y.length === y + 1) {
-        if (!bomb) {
-          this.betService.moneyUpdated.emit(5000 + this.money);
-        }
-        this.betService.isBet.emit(false);
-        bomb = false;
-      }
-    }
+    this.currentSquares(indx, bomb, xLength, x, y);
   }
 
   restartTable() {
     this.startIndex = 0;
+    this.point = 1;
     const x1 = this.x.length;
     const y1 = this.y.length;
     this.x = [];
@@ -103,4 +98,36 @@ export class TableComponent {
     this.y = Array(y).fill(0).map((y2, i) => i);
   }
 
+  currentSquares(indx, bomb, xLength, x, y) {
+    let indxX = indx;
+    while (indxX < xLength) {
+      // @ts-ignore
+      if (this.myDiv._results[this.y.length * indxX + y + 1]) {
+        // @ts-ignore
+        this.myDiv._results[this.y.length * indxX + y + 1].nativeElement.classList.add('currentSquare');
+      }
+      indxX++;
+    }
+    while (indx < xLength) {
+      if (this.squares[indx][y]) {
+        if (indx === x) {
+          bomb = true;
+        }
+        // @ts-ignore
+        this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('bomb');
+      } else {
+        // @ts-ignore
+        this.myDiv._results[this.y.length * indx + y].nativeElement.classList.add('nonBomb');
+      }
+      indx++;
+      if (bomb || this.y.length === y + 1) {
+        if (!bomb) {
+          this.betService.moneyUpdated.emit(-this.money * this.point);
+        }
+        this.betService.isBet.emit(false);
+        bomb = false;
+        return;
+      }
+    }
+  }
 }

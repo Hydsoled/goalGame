@@ -1,22 +1,33 @@
 #bg{
   background-image: linear-gradient(to bottom right, #1ba300, #2cff03);
-  height: 526px;
   margin: auto;
   display: flex;
+  width: 920px;
 }
-@media only screen and (min-width: 952px) {
+@media only screen and (min-width: 1200px) {
   #bg{
     width: 920px;
+    height: 526px;
+  }
+}
+@media only screen and (max-width: 952px) {
+  #bg{
+    width: 920px;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 952px) {
   #bg{
     width: 600px;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 600px) {
   #bg{
-    width: 450px;
+    width: auto;
     height: 100vh;
+  }
+  .row-wrapper{
+    margin: auto;
   }
 }

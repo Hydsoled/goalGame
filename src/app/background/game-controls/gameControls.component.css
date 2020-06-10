@@ -5,3 +5,10 @@
 .control-row{
   margin: 20px;
 }
+.buttonClass{
+  text-align: center;
+  width: auto;
+}
+.btn{
+  width: 335px;
+}

@@ -8,6 +8,7 @@ export class BetService {
   betUpdated = new EventEmitter<number>();
   isBet = new EventEmitter<boolean>();
   moneyUpdated = new EventEmitter<number>();
+  clickNumber = new EventEmitter<number>();
 
   constructor() {
   }
