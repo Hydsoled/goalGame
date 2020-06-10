@@ -7,6 +7,18 @@
   cursor: pointer;
   background-color: gray;
 }
+.couche{
+  width: 64px;
+  height: 64px;
+  margin: 4px;
+  text-align: center;
+}
+.smallCouche{
+  width: 30px;
+  height: 60px;
+  margin: 4px;
+  text-align: center;
+}
 .flex-container{
   display: flex;
   flex-wrap: nowrap;
